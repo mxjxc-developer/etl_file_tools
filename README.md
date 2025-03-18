@@ -8,17 +8,6 @@
 - ✅ Applies SQL constraint logic to dataframe to reduce bad data and increase data quality.
 - ✅ Supports Python 3.11+
 - ✅ Work in progress - more to come.
-
-## 📦 Installation
-```bash
-
-# Clone the repository
-git clone https://github.com/your-username/your-repo.git
-cd your-repo
-
-# Install dependencies using Poetry
-poetry install
-```
 ## 🛠️ Usage
 
 ```python

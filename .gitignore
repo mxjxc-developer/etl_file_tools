@@ -24,6 +24,7 @@ htmlcov/
 pytest_cache/
 nosetests.xml
 *.cover
+.coverage
 .hypothesis/
 
 # OS-specific files
