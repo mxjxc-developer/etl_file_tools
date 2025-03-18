@@ -20,11 +20,9 @@ venv/
 *.db
 
 # Testing and coverage reports
-.coverage
 htmlcov/
 pytest_cache/
 nosetests.xml
-coverage.xml
 *.cover
 .hypothesis/
 
