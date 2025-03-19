@@ -112,7 +112,8 @@ def test_constraint_check(custom_dataframe):
         ('Age', '>=', 100, "Error:  CHECK Constraint:  All values in Age must be greater than or equal to 100."),
         ('Age', '<=', 1, "Error:  CHECK Constraint:  All values in Age must be less than or equal to 1."),
         ('Age', '!=', 30, "Error:  CHECK Constraint:  All values in Age must not equal 30."),
-        ('Age', 'bad', 0, "Error:  Unsupported equality condition: bad"),
+        ('Age', 'in', [500, 600], "Error:  CHECK Constraint:  All values in Age must be in [500, 600]."),
+        ('Age', 'bad', 0, "Error:  Unsupported check condition: bad"),
     ],
 )
 def test_constraint_check_error(custom_dataframe, column_name, condition, value, expected_result):

@@ -121,14 +121,14 @@ class FileFrame:
         return unique_constraint
 
     @classmethod
-    def constraint_check(cls, column_name: str, check_condition: Literal['=', '>', '<', '>=', '<=', '!='], check_value: int | str | float) -> callable:
+    def constraint_check(cls, column_name: str, check_condition: Literal['=', '>', '<', '>=', '<=', '!=', 'in'], check_value: int | str | float | list) -> callable:
         """
         Creates a constraint function to check that the values in a specified column satisfy a condition.
 
         Args:
             column_name (str): The column name to check the condition on.
-            check_condition (Literal): The condition to check ('=', '>', '<', '>=', '<=', '!=').
-            check_value (int | str | float): The value to compare the column values against.
+            check_condition (Literal): The condition to check ('=', '>', '<', '>=', '<=', '!=', 'in').
+            check_value (int | str | float | list): The value to compare the column values against.
 
         Returns:
             callable: A function that checks the condition for the specified column.
@@ -155,8 +155,11 @@ class FileFrame:
             elif check_condition.upper().strip() == '!=':
                 if not (dataframe[column_name] != check_value).all():
                     raise ValueError(f"Error:  CHECK Constraint:  All values in {column_name} must not equal {check_value}.")
+            elif check_condition.upper().strip() == 'IN':
+                if not (dataframe[column_name].isin(check_value)).all():
+                    raise ValueError(f"Error:  CHECK Constraint:  All values in {column_name} must be in {check_value}.")
             else:
-                raise ValueError(f"Error:  Unsupported equality condition: {check_condition}")
+                raise ValueError(f"Error:  Unsupported check condition: {check_condition}")
         return check_constraint
 
     @classmethod
@@ -372,7 +375,7 @@ class _Constraint:
             Defaults to None.
         check_condition (str, optional): The condition for a check constraint.
             Defaults to None.
-        check_value (int | str | float, optional): The value to check against in a check constraint.
+        check_value (int | str | float | list, optional): The value to check against in a check constraint.
             Defaults to None.
         default_value (int | str | float, optional): The value to default to in the default value constraint.
             Defaults to None.
@@ -381,5 +384,5 @@ class _Constraint:
     column_names: list = field(default_factory=list)
     column_name: str = None
     check_condition: str = None
-    check_value: int | str | float = None
+    check_value: int | str | float | list = None
     default_value: int | str | float = None
